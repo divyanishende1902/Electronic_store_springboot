@@ -32,7 +32,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public ProductDto create(ProductDto productDto, String productId) {
+    public ProductDto update(ProductDto productDto, String productId) {
         Product product = productRepository.findById(productId).orElseThrow(() -> new ResourceNotFoundException("Product not found with given id"));
         product.setTitle(productDto.getTitle());
         product.setDescription(productDto.getDescription());
