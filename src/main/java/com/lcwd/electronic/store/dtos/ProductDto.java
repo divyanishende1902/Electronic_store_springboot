@@ -14,7 +14,7 @@ import java.util.Date;
 @ToString
 public class ProductDto {
 
-
+        private String productId;
         private String title;
         private String description;
         private int price;
@@ -23,8 +23,9 @@ public class ProductDto {
         private Date addDate;
         private boolean live;
         private boolean stock;
+        private String productImageName;
 
 
-    }
+}
 
 
