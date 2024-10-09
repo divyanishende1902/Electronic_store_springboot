@@ -1,13 +1,13 @@
 package com.lcwd.electronic.store.entities;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter
@@ -27,4 +27,10 @@ public class Category {
     private String description;
 
     private String coverImage;
+
+    //cascade type if remove kiya to , update kiya to sabhi chiz honi chahiye parent ki child ke sath
+    // fetch type using for when category fetching product not get show
+    //it only show when required for that fetch type lazy
+    @OneToMany(mappedBy ="category", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Product> products = new ArrayList<>();
 }

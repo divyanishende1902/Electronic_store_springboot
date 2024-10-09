@@ -53,7 +53,7 @@ public class ProductController {
     }
     //get single
     @GetMapping("/{productId}")
-    public ResponseEntity<ProductDto> getProductById(@PathVariable String productId){
+    public ResponseEntity<ProductDto> getProductById(@PathVariable("productId") String productId){
         ProductDto productDto = productService.get(productId);
       return new ResponseEntity<>(productDto,HttpStatus.OK);
     }
@@ -72,7 +72,7 @@ public class ProductController {
 
     //get all live
 //    /products/live
-    @GetMapping("/{live}")
+    @GetMapping("/live")
     public ResponseEntity<PageableResponse<ProductDto>> getAllLive(@RequestParam(value = "pageNumber", defaultValue = "0", required = false) int pageNumber,
                                                                @RequestParam(value = "pageSize", defaultValue = "10", required = false) int pageSize,
                                                                @RequestParam(value = "sortBy", defaultValue = "title", required = false) String sortBy,

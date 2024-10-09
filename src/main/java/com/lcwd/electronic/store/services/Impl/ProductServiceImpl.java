@@ -2,9 +2,11 @@ package com.lcwd.electronic.store.services.Impl;
 
 import com.lcwd.electronic.store.dtos.PageableResponse;
 import com.lcwd.electronic.store.dtos.ProductDto;
+import com.lcwd.electronic.store.entities.Category;
 import com.lcwd.electronic.store.entities.Product;
 import com.lcwd.electronic.store.exceptions.ResourceNotFoundException;
 import com.lcwd.electronic.store.helper.Helper;
+import com.lcwd.electronic.store.repositories.CategoryRepository;
 import com.lcwd.electronic.store.repositories.ProductRepository;
 import com.lcwd.electronic.store.services.ProductService;
 import org.modelmapper.ModelMapper;
@@ -25,6 +27,9 @@ public class ProductServiceImpl implements ProductService {
     private ProductRepository productRepository;
     @Autowired
     private ModelMapper mapper;
+
+    @Autowired
+    private CategoryRepository categoryRepository;
     @Override
     public ProductDto create(ProductDto productDto) {
         Product product = mapper.map(productDto, Product.class);
@@ -98,5 +103,28 @@ public class ProductServiceImpl implements ProductService {
         Page<Product> page = productRepository.findByTitleContaining(subTitle, pageable);
 
         return Helper.getpageableResponse(page, ProductDto.class);
+    }
+
+    @Override
+    public ProductDto createProductWithCategory(ProductDto productDto, String categoryId) {
+        //fetch the category
+        Category category = categoryRepository.findById(categoryId).orElseThrow(() -> new ResourceNotFoundException("Category not found. !!"));
+        Product product = mapper.map(productDto, Product.class);
+
+        //product Id
+        String productId = UUID.randomUUID().toString();
+        product.setProductId(productId);
+        //Added
+        product.setAddDate(new Date());
+        product.setCategory((category));
+        Product saveProduct = productRepository.save(product);
+        return mapper.map(saveProduct, ProductDto.class);
+
+
+    }
+
+    @Override
+    public ProductDto updateProductWithCategory(ProductDto productDto, String categoryId, String productId) {
+        return null;
     }
 }
