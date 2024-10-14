@@ -83,7 +83,9 @@ public class ProductController {
     }
 
     //search
-    //  /products/live
+    //  /product
+    //
+    //  s/live
     @GetMapping("/search/{query}")
     public ResponseEntity<PageableResponse<ProductDto>> searchProduct(
             @PathVariable String query,
@@ -120,4 +122,6 @@ public class ProductController {
         StreamUtils.copy(resource, response.getOutputStream());
 
     }
+
+
 }
